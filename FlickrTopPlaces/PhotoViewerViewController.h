@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface PhotoViewerViewController : UIViewController
-
+@property(nonatomic, strong) NSURL *imageUrl;
 @end

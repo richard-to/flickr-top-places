@@ -9,30 +9,27 @@
 #import "PhotoViewerViewController.h"
 
 @interface PhotoViewerViewController ()
-
+@property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollViewer;
 @end
 
 @implementation PhotoViewerViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize imageUrl = _imageUrl;
+@synthesize scrollViewer = _scrollViewer;
+@synthesize imageView = _imageView;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    self.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.imageUrl]];
+    self.scrollViewer.contentSize = self.imageView.image.size;
+    self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height);    
 }
 
-- (void)didReceiveMemoryWarning
+- (void)setImageUrl:(NSURL *)imageUrl
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+    _imageUrl = imageUrl;
 
+}
 @end

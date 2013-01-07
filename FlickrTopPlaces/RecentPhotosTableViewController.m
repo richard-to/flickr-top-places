@@ -7,6 +7,7 @@
 //
 
 #import "RecentPhotosTableViewController.h"
+#import "PhotoViewerViewController.h"
 #import "FlickrFetcher.h"
 
 @interface RecentPhotosTableViewController ()
@@ -115,4 +116,16 @@
      */
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    if ([segue.identifier isEqualToString:@"Photo Viewer"] ||
+        [segue.identifier isEqualToString:@"Photo Viewer 2"]) {
+        NSDictionary *photoMeta = [self.photosList objectAtIndex:indexPath.row];
+        NSLog(@"%@", photoMeta);
+        NSURL *url = [FlickrFetcher urlForPhoto: photoMeta
+                                         format:FlickrPhotoFormatLarge];
+        [segue.destinationViewController setImageUrl: url];
+    }
+}
 @end

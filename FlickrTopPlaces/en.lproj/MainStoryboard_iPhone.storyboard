@@ -23,11 +23,11 @@
             </objects>
             <point key="canvasLocation" x="-785" y="-419"/>
         </scene>
-        <!--Navigation Controller - Item-->
+        <!--Navigation Controller - Viewed Photos-->
         <scene sceneID="spi-2L-dNc">
             <objects>
                 <navigationController definesPresentationContext="YES" id="2nS-t1-nkp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="dsg-0n-So0"/>
+                    <tabBarItem key="tabBarItem" title="Viewed Photos" id="dsg-0n-So0"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="69I-qS-oDF">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -63,7 +63,7 @@
                             <outlet property="delegate" destination="GL9-NU-VuS" id="yhg-3M-NP9"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Recent Photos" id="4QY-FJ-hCI"/>
+                    <tabBarItem key="tabBarItem" title="Viewed Photos" id="4QY-FJ-hCI"/>
                     <navigationItem key="navigationItem" title="Viewed Photos" id="G8E-iZ-bJE"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cjr-9b-0j7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -141,11 +141,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Recent Photos Cell" textLabel="Dlq-ai-l79" detailTextLabel="rVL-C1-QVA" style="IBUITableViewCellStyleSubtitle" id="P8h-ce-VvH">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Recent Photos Cell" textLabel="Dlq-ai-l79" detailTextLabel="rVL-C1-QVA" style="IBUITableViewCellStyleSubtitle" id="P8h-ce-VvH">
                                 <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dlq-ai-l79">
@@ -161,16 +161,19 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <segue destination="LDU-tm-SmU" kind="push" identifier="Photo Viewer 2" id="Fn7-Oh-43z"/>
+                                </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Recent Photos Cell No Sub" textLabel="Tdg-NB-kII" style="IBUITableViewCellStyleDefault" id="hoI-OM-xXg">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Recent Photos Cell No Sub" textLabel="Tdg-NB-kII" style="IBUITableViewCellStyleDefault" id="hoI-OM-xXg">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tdg-NB-kII">
-                                            <rect key="frame" x="10" y="0.0" width="267" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="280" height="43"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -179,7 +182,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="LDU-tm-SmU" kind="push" identifier="Photo Viewer" trigger="accessoryAction" id="iF4-B0-vEv"/>
+                                    <segue destination="LDU-tm-SmU" kind="push" identifier="Photo Viewer" id="55Q-bZ-BvR"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -194,15 +197,27 @@
             </objects>
             <point key="canvasLocation" x="1060" y="-996"/>
         </scene>
-        <!--View Controller - Viewer-->
+        <!--Photo Viewer View Controller - Viewer-->
         <scene sceneID="ZRC-PY-lhE">
             <objects>
-                <viewController id="LDU-tm-SmU" sceneMemberID="viewController">
+                <viewController id="LDU-tm-SmU" customClass="PhotoViewerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="S8W-Lj-MGb">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="McV-uO-w8N"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="McV-uO-w8N">
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="TopLeft" translatesAutoresizingMaskIntoConstraints="NO" id="Prf-aV-bvJ"/>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="centerY" secondItem="McV-uO-w8N" secondAttribute="centerY" type="default" id="0YI-00-cjX"/>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="centerX" secondItem="McV-uO-w8N" secondAttribute="centerX" type="default" id="36h-8f-4BC"/>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="bottom" secondItem="McV-uO-w8N" secondAttribute="bottom" type="default" id="Flv-WV-73N"/>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="trailing" secondItem="McV-uO-w8N" secondAttribute="trailing" type="default" id="I3i-bJ-3t8"/>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="top" secondItem="McV-uO-w8N" secondAttribute="top" type="default" id="N1n-Hx-omj"/>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="leading" secondItem="McV-uO-w8N" secondAttribute="leading" type="default" id="dO3-Hd-Esv"/>
+                                </constraints>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -213,6 +228,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Viewer" id="PPe-SJ-at3"/>
+                    <connections>
+                        <outlet property="imageView" destination="Prf-aV-bvJ" id="XIU-H6-dQf"/>
+                        <outlet property="scrollViewer" destination="McV-uO-w8N" id="0Nm-b9-Pwv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gE7-Lh-mxP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -222,6 +241,13 @@
     <classes>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PhotoViewerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotoViewerViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="scrollViewer" candidateClass="UIScrollView"/>
+            </relationships>
         </class>
         <class className="PlacesTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlacesTableViewController.h"/>
@@ -238,4 +264,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="55Q-bZ-BvR"/>
+    </inferredMetricsTieBreakers>
 </document>
