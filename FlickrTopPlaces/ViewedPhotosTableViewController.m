@@ -1,57 +1,49 @@
 //
-//  PlacesTableViewController.m
+//  ViewedPhotosTableViewController.m
 //  FlickrTopPlaces
 //
 //  Created by Richard To on 1/6/13.
 //  Copyright (c) 2013 Richard To. All rights reserved.
 //
 
-#import "PlacesTableViewController.h"
-#import "RecentPhotosTableViewController.h"
+#import "ViewedPhotosTableViewController.h"
 #import "FlickrFetcher.h"
 
-@interface PlacesTableViewController ()
-@property(nonatomic, strong) NSArray *places;
+@interface ViewedPhotosTableViewController ()
+@property (nonatomic, strong) NSArray *photosList;
 @end
 
-@implementation PlacesTableViewController
+@implementation ViewedPhotosTableViewController
 
-@synthesize places = _places;
+@synthesize place = _place;
+@synthesize photosList = _photosList;
 
-- (NSArray *)places
+- (void)setPhotosList:(NSArray *)photosList
 {
-    if (!_places) {
-        NSArray *tempPlaces = [FlickrFetcher topPlaces];
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:FLICKR_PLACE_NAME
-                                                               ascending:YES];
-        _places = [tempPlaces sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
-    }
-    return _places;
+    _photosList = photosList;
+    [self.tableView reloadData];
+}
+
+- (void)setPlace:(NSDictionary *)place
+{
+    _place = place;
+    self.photosList = [FlickrFetcher photosInPlace:place maxResults:50];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.places.count;
+    return self.photosList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Places Cell";
-    
+    static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    NSDictionary *cellPlace = [self.places objectAtIndex: indexPath.row];
-    NSArray *placeChunks = [[cellPlace objectForKey:FLICKR_PLACE_NAME]
-                            componentsSeparatedByString:@", "];
-    cell.textLabel.text = placeChunks[0];
-    if (placeChunks.count == 3) {
-        cell.detailTextLabel.text = [[NSString alloc] initWithFormat:
-                                 @"%@, %@", placeChunks[1], placeChunks[2]];
-    } else {
-        cell.detailTextLabel.text = placeChunks[1];
-    }
+    // Configure the cell...
+    
     return cell;
 }
 
@@ -106,14 +98,4 @@
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
 }
-
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender 
-{
-    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-    if ([segue.identifier isEqualToString:@"View Recent Photos"]) {
-        [segue.destinationViewController setPlace: [self.places objectAtIndex:indexPath.row]];
-    }
-}
-
 @end
