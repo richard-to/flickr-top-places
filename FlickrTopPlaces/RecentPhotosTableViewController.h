@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface RecentPhotosTableViewController : UITableViewController
-
+@property (nonatomic, strong) NSDictionary *place;
 @end

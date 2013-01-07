@@ -7,62 +7,59 @@
 //
 
 #import "RecentPhotosTableViewController.h"
+#import "FlickrFetcher.h"
 
 @interface RecentPhotosTableViewController ()
-
+@property (nonatomic, strong) NSArray *photosList;
 @end
 
 @implementation RecentPhotosTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+@synthesize place = _place;
+@synthesize photosList = _photosList;
+
+- (void)setPhotosList:(NSArray *)photosList
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    _photosList = photosList;
+    [self.tableView reloadData];
 }
 
-- (void)viewDidLoad
+- (void)setPlace:(NSDictionary *)place
 {
-    [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    _place = place;
+    self.photosList = [FlickrFetcher photosInPlace:place maxResults:50];
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return self.photosList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSDictionary *cellPhoto = [self.photosList objectAtIndex:indexPath.row];
+    NSString *title = cellPhoto[FLICKR_PHOTO_TITLE];
+    NSString *desc = cellPhoto[@"description"][@"_content"];
+    UITableViewCell *cell;
     
-    // Configure the cell...
-    
+    if (title.length > 0 && desc.length > 0) {
+        static NSString *CellIdentifier = @"Recent Photos Cell";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.textLabel.text = title;
+        cell.detailTextLabel.text = desc;
+    } else {
+        static NSString *CellIdentifier = @"Recent Photos Cell No Sub";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        if (title.length > 0) {
+            cell.textLabel.text = title;
+        } else if (desc.length > 0) {
+            cell.textLabel.text = desc;        
+        } else {
+            cell.textLabel.text = @"Unknown";       
+        }
+    }
     return cell;
 }
 
