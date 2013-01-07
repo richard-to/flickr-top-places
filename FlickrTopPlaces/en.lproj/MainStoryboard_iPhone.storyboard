@@ -132,7 +132,7 @@
             </objects>
             <point key="canvasLocation" x="563" y="-991"/>
         </scene>
-        <!--Recent Photos Table View Controller - Recent Photos-->
+        <!--Recent Photos Table View Controller - Recent-->
         <scene sceneID="rdt-pG-4He">
             <objects>
                 <tableViewController id="3Us-Rm-vxM" customClass="RecentPhotosTableViewController" sceneMemberID="viewController">
@@ -162,15 +162,15 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Recent Photos Cell No Sub" textLabel="Tdg-NB-kII" style="IBUITableViewCellStyleDefault" id="hoI-OM-xXg">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Recent Photos Cell No Sub" textLabel="Tdg-NB-kII" style="IBUITableViewCellStyleDefault" id="hoI-OM-xXg">
                                 <rect key="frame" x="0.0" y="66" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Tdg-NB-kII">
-                                            <rect key="frame" x="10" y="0.0" width="300" height="43"/>
+                                            <rect key="frame" x="10" y="0.0" width="267" height="43"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -178,6 +178,9 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <segue destination="LDU-tm-SmU" kind="push" identifier="Photo Viewer" trigger="accessoryAction" id="iF4-B0-vEv"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -185,14 +188,41 @@
                             <outlet property="delegate" destination="3Us-Rm-vxM" id="oar-Lk-mRt"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Recent Photos" id="NiT-FZ-81x"/>
+                    <navigationItem key="navigationItem" title="Recent" id="NiT-FZ-81x"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iv8-mS-l0M" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1292" y="-976"/>
+            <point key="canvasLocation" x="1060" y="-996"/>
+        </scene>
+        <!--View Controller - Viewer-->
+        <scene sceneID="ZRC-PY-lhE">
+            <objects>
+                <viewController id="LDU-tm-SmU" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="S8W-Lj-MGb">
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="McV-uO-w8N"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="McV-uO-w8N" firstAttribute="leading" secondItem="S8W-Lj-MGb" secondAttribute="leading" type="default" id="GSg-Q2-Blb"/>
+                            <constraint firstItem="McV-uO-w8N" firstAttribute="top" secondItem="S8W-Lj-MGb" secondAttribute="top" type="default" id="PHq-2I-myj"/>
+                            <constraint firstItem="McV-uO-w8N" firstAttribute="trailing" secondItem="S8W-Lj-MGb" secondAttribute="trailing" type="default" id="Sxv-aP-oPM"/>
+                            <constraint firstItem="McV-uO-w8N" firstAttribute="bottom" secondItem="S8W-Lj-MGb" secondAttribute="bottom" type="default" id="zHV-vG-kga"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Viewer" id="PPe-SJ-at3"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gE7-Lh-mxP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1568" y="-981"/>
         </scene>
     </scenes>
     <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
         <class className="PlacesTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlacesTableViewController.h"/>
         </class>
