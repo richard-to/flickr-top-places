@@ -126,6 +126,16 @@
                                          format:FlickrPhotoFormatLarge];
         [segue.destinationViewController setImageUrl: url];
         [segue.destinationViewController setPhotoTitle:photoMeta[FLICKR_PHOTO_TITLE]];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSMutableArray *viewedSet = [defaults objectForKey:@"viewedPhotos"];
+        if (!viewedSet) {
+            viewedSet = [[NSMutableArray alloc] init];
+        }
+        [viewedSet addObject:photoMeta];
+        [[NSUserDefaults standardUserDefaults] setObject:viewedSet
+                                                  forKey:@"viewedPhotos"];
     }
 }
+
 @end
