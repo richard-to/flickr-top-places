@@ -128,13 +128,14 @@
         [segue.destinationViewController setPhotoTitle:photoMeta[FLICKR_PHOTO_TITLE]];
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-        NSMutableArray *viewedSet = [defaults objectForKey:@"viewedPhotos"];
+        NSMutableArray *viewedSet = [[NSMutableArray alloc] initWithArray:[defaults objectForKey:@"viewedPhotos"] copyItems:YES];
+    
         if (!viewedSet) {
             viewedSet = [[NSMutableArray alloc] init];
         }
         [viewedSet addObject:photoMeta];
-        [[NSUserDefaults standardUserDefaults] setObject:viewedSet
-                                                  forKey:@"viewedPhotos"];
+        [[NSUserDefaults standardUserDefaults] setObject:[viewedSet copy]
+                                                forKey:@"viewedPhotos"];
     }
 }
 
