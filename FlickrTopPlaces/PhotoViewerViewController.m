@@ -8,7 +8,7 @@
 
 #import "PhotoViewerViewController.h"
 
-@interface PhotoViewerViewController ()
+@interface PhotoViewerViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollViewer;
 @property (weak, nonatomic) IBOutlet UILabel *photoLabel;
@@ -25,10 +25,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.scrollViewer.delegate = self;
     self.photoLabel.text = self.photoTitle;
     self.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.imageUrl]];
-    self.scrollViewer.contentSize = self.imageView.image.size;
-    self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height);    
+    self.scrollViewer.zoomScale = 1;
+    self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height);
+}
+
+- (void)viewDidLayoutSubviews
+{    
+    self.scrollViewer.contentSize = self.imageView.frame.size;
+}
+
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+{
+    return self.imageView;
 }
 
 - (NSString *)photoTitle
