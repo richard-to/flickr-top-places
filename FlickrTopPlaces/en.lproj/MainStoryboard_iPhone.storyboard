@@ -210,26 +210,34 @@
                                     <imageView userInteractionEnabled="NO" contentMode="TopLeft" translatesAutoresizingMaskIntoConstraints="NO" id="Prf-aV-bvJ"/>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="centerY" secondItem="McV-uO-w8N" secondAttribute="centerY" type="default" id="0YI-00-cjX"/>
-                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="centerX" secondItem="McV-uO-w8N" secondAttribute="centerX" type="default" id="36h-8f-4BC"/>
-                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="bottom" secondItem="McV-uO-w8N" secondAttribute="bottom" type="default" id="Flv-WV-73N"/>
-                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="trailing" secondItem="McV-uO-w8N" secondAttribute="trailing" type="default" id="I3i-bJ-3t8"/>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="leading" secondItem="McV-uO-w8N" secondAttribute="leading" type="default" id="5M0-1B-Bxd"/>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="centerY" secondItem="McV-uO-w8N" secondAttribute="centerY" type="default" id="IQS-zR-uIS"/>
                                     <constraint firstItem="Prf-aV-bvJ" firstAttribute="top" secondItem="McV-uO-w8N" secondAttribute="top" type="default" id="N1n-Hx-omj"/>
-                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="leading" secondItem="McV-uO-w8N" secondAttribute="leading" type="default" id="dO3-Hd-Esv"/>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="centerX" secondItem="McV-uO-w8N" secondAttribute="centerX" type="default" id="NcX-uT-XkA"/>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="trailing" secondItem="McV-uO-w8N" secondAttribute="trailing" type="default" id="Sy1-iB-XMt"/>
+                                    <constraint firstItem="Prf-aV-bvJ" firstAttribute="bottom" secondItem="McV-uO-w8N" secondAttribute="bottom" type="default" id="Z51-oi-C5O"/>
                                 </constraints>
                             </scrollView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Unknown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aFi-Aa-GzH">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="aFi-Aa-GzH" firstAttribute="leading" secondItem="S8W-Lj-MGb" secondAttribute="leading" constant="10" id="0YI-6K-Wec"/>
                             <constraint firstItem="McV-uO-w8N" firstAttribute="leading" secondItem="S8W-Lj-MGb" secondAttribute="leading" type="default" id="GSg-Q2-Blb"/>
                             <constraint firstItem="McV-uO-w8N" firstAttribute="top" secondItem="S8W-Lj-MGb" secondAttribute="top" type="default" id="PHq-2I-myj"/>
                             <constraint firstItem="McV-uO-w8N" firstAttribute="trailing" secondItem="S8W-Lj-MGb" secondAttribute="trailing" type="default" id="Sxv-aP-oPM"/>
-                            <constraint firstItem="McV-uO-w8N" firstAttribute="bottom" secondItem="S8W-Lj-MGb" secondAttribute="bottom" type="default" id="zHV-vG-kga"/>
+                            <constraint firstAttribute="bottom" secondItem="aFi-Aa-GzH" secondAttribute="bottom" constant="10" id="XZU-0Z-Idf"/>
+                            <constraint firstItem="aFi-Aa-GzH" firstAttribute="top" secondItem="McV-uO-w8N" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="sjm-Xu-yKb"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Viewer" id="PPe-SJ-at3"/>
                     <connections>
                         <outlet property="imageView" destination="Prf-aV-bvJ" id="XIU-H6-dQf"/>
+                        <outlet property="photoLabel" destination="aFi-Aa-GzH" id="VAF-BU-3ky"/>
                         <outlet property="scrollViewer" destination="McV-uO-w8N" id="0Nm-b9-Pwv"/>
                     </connections>
                 </viewController>
@@ -246,6 +254,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotoViewerViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="photoLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="scrollViewer" candidateClass="UIScrollView"/>
             </relationships>
         </class>

@@ -122,10 +122,10 @@
     if ([segue.identifier isEqualToString:@"Photo Viewer"] ||
         [segue.identifier isEqualToString:@"Photo Viewer 2"]) {
         NSDictionary *photoMeta = [self.photosList objectAtIndex:indexPath.row];
-        NSLog(@"%@", photoMeta);
         NSURL *url = [FlickrFetcher urlForPhoto: photoMeta
                                          format:FlickrPhotoFormatLarge];
         [segue.destinationViewController setImageUrl: url];
+        [segue.destinationViewController setPhotoTitle:photoMeta[FLICKR_PHOTO_TITLE]];
     }
 }
 @end
