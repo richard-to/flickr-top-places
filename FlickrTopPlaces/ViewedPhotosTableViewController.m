@@ -10,40 +10,44 @@
 #import "FlickrFetcher.h"
 
 @interface ViewedPhotosTableViewController ()
-@property (nonatomic, strong) NSArray *photosList;
 @end
 
 @implementation ViewedPhotosTableViewController
-
-@synthesize place = _place;
-@synthesize photosList = _photosList;
-
-- (void)setPhotosList:(NSArray *)photosList
-{
-    _photosList = photosList;
-    [self.tableView reloadData];
-}
-
-- (void)setPlace:(NSDictionary *)place
-{
-    _place = place;
-    self.photosList = [FlickrFetcher photosInPlace:place maxResults:50];
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.photosList.count;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableSet *set = [defaults objectForKey:@"viewedPhotos"];
+    return set.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *set = [defaults objectForKey:@"viewedPhotos"];
+    NSDictionary *cellPhoto = [set objectAtIndex: indexPath.row];
+
+    UITableViewCell *cell;
+    NSString *title = cellPhoto[FLICKR_PHOTO_TITLE];
+    NSString *desc = cellPhoto[@"description"][@"_content"];
     
-    // Configure the cell...
-    
+    if (title.length > 0 && desc.length > 0) {
+        static NSString *CellIdentifier = @"Viewed Photos Cell";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.textLabel.text = title;
+        cell.detailTextLabel.text = desc;
+    } else {
+        static NSString *CellIdentifier = @"Viewed Photos Cell No Sub";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        if (title.length > 0) {
+            cell.textLabel.text = title;
+        } else if (desc.length > 0) {
+            cell.textLabel.text = desc;
+        } else {
+            cell.textLabel.text = @"Unknown";
+        }
+    }
     return cell;
 }
 

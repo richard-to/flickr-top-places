@@ -9,5 +9,4 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewedPhotosTableViewController : UITableViewController
-@property (nonatomic, strong) NSDictionary *place;
 @end
