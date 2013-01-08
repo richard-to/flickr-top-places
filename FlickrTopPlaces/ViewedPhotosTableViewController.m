@@ -7,26 +7,46 @@
 //
 
 #import "ViewedPhotosTableViewController.h"
+#import "PhotoViewerViewController.h"
 #import "FlickrFetcher.h"
 
 @interface ViewedPhotosTableViewController ()
 @end
 
 @implementation ViewedPhotosTableViewController
+
+@synthesize photoList = _photoList;
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    self.photoList = [[NSUserDefaults standardUserDefaults] objectForKey:@"viewedPhotos"];
+    [self.tableView reloadData];
+}
+
+-(NSArray *)photoList
+{
+    if (!_photoList) {
+        self.photoList = [[NSUserDefaults standardUserDefaults] objectForKey:@"viewedPhotos"];
+    }
+    return _photoList;
+}
+
+-(void)setPhotoList:(NSArray *)photoList
+{
+    _photoList = photoList;
+    [self.tableView reloadData];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableSet *set = [defaults objectForKey:@"viewedPhotos"];
-    return set.count;
+    return self.photoList.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray *set = [defaults objectForKey:@"viewedPhotos"];
-    NSDictionary *cellPhoto = [set objectAtIndex: indexPath.row];
+    NSDictionary *cellPhoto = [self.photoList objectAtIndex: indexPath.row];
 
     UITableViewCell *cell;
     NSString *title = cellPhoto[FLICKR_PHOTO_TITLE];
@@ -101,5 +121,18 @@
      // Pass the selected object to the new view controller.
      [self.navigationController pushViewController:detailViewController animated:YES];
      */
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    NSDictionary *photoMeta = [self.photoList objectAtIndex: indexPath.row];
+    if ([segue.identifier isEqualToString:@"Photo Viewer from Viewed"] ||
+        [segue.identifier isEqualToString:@"Photo Viewer from Viewed 2"]) {
+        NSURL *url = [FlickrFetcher urlForPhoto: photoMeta
+                                         format:FlickrPhotoFormatLarge];
+        [segue.destinationViewController setImageUrl: url];
+        [segue.destinationViewController setPhotoTitle:photoMeta[FLICKR_PHOTO_TITLE]];
+    }
 }
 @end

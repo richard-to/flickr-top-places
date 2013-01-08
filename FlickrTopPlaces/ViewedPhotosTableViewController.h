@@ -9,4 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ViewedPhotosTableViewController : UITableViewController
+@property NSArray *photoList;
 @end
