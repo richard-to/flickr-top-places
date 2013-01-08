@@ -32,7 +32,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="GL9-NU-VuS" kind="relationship" relationship="rootViewController" id="RUG-u6-Rd1"/>
+                        <segue destination="GL9-NU-VuS" kind="relationship" relationship="rootViewController" id="N3s-45-skf"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Mg3-VX-BcN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -64,7 +64,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="LDU-tm-SmU" kind="push" identifier="Photo Viewer from Viewed 2" id="zIw-Lv-RxR"/>
+                                    <segue destination="QxX-Ay-z5T" kind="push" identifier="Photo Viewer 2" id="phd-23-3e9"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Viewed Photos Cell" textLabel="xA6-jZ-aJW" detailTextLabel="j80-a3-i1d" style="IBUITableViewCellStyleSubtitle" id="nIo-hR-mZ2">
@@ -90,7 +90,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <connections>
-                                    <segue destination="LDU-tm-SmU" kind="push" identifier="Photo Viewer from Viewed" id="uiq-mX-7h0"/>
+                                    <segue destination="QxX-Ay-z5T" kind="push" identifier="Photo Viewer" id="d8t-RK-1H8"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -282,15 +282,89 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gE7-Lh-mxP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1084" y="-173"/>
+            <point key="canvasLocation" x="1538" y="-465"/>
+        </scene>
+        <!--Photo Viewer View Controller - Viewer-->
+        <scene sceneID="IaH-Hy-emy">
+            <objects>
+                <viewController id="QxX-Ay-z5T" customClass="PhotoViewerViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3vc-5d-9CS">
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" delaysContentTouches="NO" canCancelContentTouches="NO" minimumZoomScale="0.20000000298023224" maximumZoomScale="5" translatesAutoresizingMaskIntoConstraints="NO" id="feY-5E-fEt">
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="TopLeft" translatesAutoresizingMaskIntoConstraints="NO" id="1QP-as-nRN">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="320" id="6PB-Aa-1e0"/>
+                                            <constraint firstAttribute="height" constant="416" id="8Ty-VX-f3p"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="1QP-as-nRN" firstAttribute="bottom" secondItem="feY-5E-fEt" secondAttribute="bottom" type="default" id="EfO-U9-peR"/>
+                                    <constraint firstItem="1QP-as-nRN" firstAttribute="leading" secondItem="feY-5E-fEt" secondAttribute="leading" constant="20" symbolic="YES" type="default" id="pA8-t7-jka"/>
+                                    <constraint firstItem="1QP-as-nRN" firstAttribute="trailing" secondItem="feY-5E-fEt" secondAttribute="trailing" type="default" id="r9f-aL-4Aq"/>
+                                    <constraint firstItem="1QP-as-nRN" firstAttribute="top" secondItem="feY-5E-fEt" secondAttribute="top" constant="20" symbolic="YES" type="default" id="vGj-Gf-0o5"/>
+                                </constraints>
+                            </scrollView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Unknown" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W0p-by-yjc">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="W0p-by-yjc" firstAttribute="top" secondItem="feY-5E-fEt" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="1P5-Cs-a4v"/>
+                            <constraint firstItem="W0p-by-yjc" firstAttribute="leading" secondItem="3vc-5d-9CS" secondAttribute="leading" constant="10" id="7di-ev-Wqk"/>
+                            <constraint firstItem="feY-5E-fEt" firstAttribute="top" secondItem="3vc-5d-9CS" secondAttribute="top" constant="-20" id="Tej-7R-PBj"/>
+                            <constraint firstAttribute="bottom" secondItem="W0p-by-yjc" secondAttribute="bottom" constant="10" id="UIs-Id-AAQ"/>
+                            <constraint firstItem="feY-5E-fEt" firstAttribute="trailing" secondItem="3vc-5d-9CS" secondAttribute="trailing" type="default" id="bVh-Fe-80x"/>
+                            <constraint firstItem="feY-5E-fEt" firstAttribute="leading" secondItem="3vc-5d-9CS" secondAttribute="leading" constant="-20" id="tJy-Zy-rR4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Viewer" id="Qfj-Wx-Tmq"/>
+                    <connections>
+                        <outlet property="imageView" destination="1QP-as-nRN" id="iOo-Mt-oVw"/>
+                        <outlet property="photoLabel" destination="W0p-by-yjc" id="ynR-1v-gCH"/>
+                        <outlet property="scrollViewer" destination="feY-5E-fEt" id="ZVt-qU-eea"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1hK-ws-E3a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="832" y="-145"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="NSLayoutConstraint" superclassName="NSObject">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
+        </class>
+        <class className="PhotoViewerViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotoViewerViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="photoLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="scrollViewer" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="PlacesTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PlacesTableViewController.h"/>
+        </class>
+        <class className="RecentPhotosTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RecentPhotosTableViewController.h"/>
+        </class>
+        <class className="ViewedPhotosTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewedPhotosTableViewController.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="uiq-mX-7h0"/>
+        <segue reference="Fn7-Oh-43z"/>
+        <segue reference="d8t-RK-1H8"/>
     </inferredMetricsTieBreakers>
 </document>

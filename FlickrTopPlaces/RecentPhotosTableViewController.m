@@ -19,6 +19,7 @@
 @synthesize place = _place;
 @synthesize photosList = _photosList;
 
+
 - (void)setPhotosList:(NSArray *)photosList
 {
     _photosList = photosList;

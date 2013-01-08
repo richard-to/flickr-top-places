@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PlacesTableViewController : UITableViewController
+@interface PlacesTableViewController : UITableViewController <UITabBarControllerDelegate>
 
 @end

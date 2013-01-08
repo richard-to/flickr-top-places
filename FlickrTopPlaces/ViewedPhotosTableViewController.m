@@ -127,8 +127,8 @@
 {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     NSDictionary *photoMeta = [self.photoList objectAtIndex: indexPath.row];
-    if ([segue.identifier isEqualToString:@"Photo Viewer from Viewed"] ||
-        [segue.identifier isEqualToString:@"Photo Viewer from Viewed 2"]) {
+    if ([segue.identifier isEqualToString:@"Photo Viewer"] ||
+        [segue.identifier isEqualToString:@"Photo Viewer 2"]) {
         NSURL *url = [FlickrFetcher urlForPhoto: photoMeta
                                          format:FlickrPhotoFormatLarge];
         [segue.destinationViewController setImageUrl: url];

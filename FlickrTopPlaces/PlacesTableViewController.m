@@ -18,6 +18,15 @@
 
 @synthesize places = _places;
 
+-(void)viewDidLoad
+{
+    self.tabBarController.delegate = self;
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UINavigationController *)viewController{
+    [viewController popToRootViewControllerAnimated:NO];
+}
+
 - (NSArray *)places
 {
     if (!_places) {
