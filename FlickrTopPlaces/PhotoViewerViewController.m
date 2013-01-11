@@ -27,14 +27,25 @@
     [super viewDidLoad];
     self.scrollViewer.delegate = self;
     self.photoLabel.text = self.photoTitle;
-    self.imageView.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.imageUrl]];
-    self.scrollViewer.zoomScale = 1;
-    self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height);
 }
 
-- (void)viewDidLayoutSubviews
-{    
-    self.scrollViewer.contentSize = self.imageView.frame.size;
+- (void)viewWillAppear:(BOOL)animated
+{
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    
+    dispatch_queue_t downloadQueue = dispatch_queue_create("flickr photo download", NULL);
+    dispatch_async(downloadQueue, ^{
+        UIImage *img = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.imageUrl]];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.navigationItem.rightBarButtonItem = NULL;
+            self.imageView.image = img;
+            self.scrollViewer.zoomScale = 1;
+            self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height);
+            self.scrollViewer.contentSize = self.imageView.frame.size;            
+        });
+    });
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView

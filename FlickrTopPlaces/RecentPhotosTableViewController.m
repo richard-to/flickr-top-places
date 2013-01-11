@@ -28,8 +28,22 @@
 
 - (void)setPlace:(NSDictionary *)place
 {
-    _place = place;
-    self.photosList = [FlickrFetcher photosInPlace:place maxResults:50];
+    if (_place != place) {
+        _place = place;
+    
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [spinner startAnimating];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+    
+        dispatch_queue_t downloadQueue = dispatch_queue_create("photos in place", NULL);
+        dispatch_async(downloadQueue, ^{
+            NSArray *photosInPLace = [FlickrFetcher photosInPlace:place maxResults:50];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.navigationItem.rightBarButtonItem = NULL;
+                self.photosList = photosInPLace;
+            });
+        });
+    }
 }
 
 #pragma mark - Table view data source

@@ -30,10 +30,20 @@
 - (NSArray *)places
 {
     if (!_places) {
-        NSArray *tempPlaces = [FlickrFetcher topPlaces];
-        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:FLICKR_PLACE_NAME
-                                                               ascending:YES];
-        _places = [tempPlaces sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+        UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        [spinner startAnimating];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
+        
+        dispatch_queue_t downloadQueue = dispatch_queue_create("flickr places", NULL);
+        dispatch_async(downloadQueue, ^{
+            NSArray *tempPlaces = [FlickrFetcher topPlaces];
+            NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:FLICKR_PLACE_NAME ascending:YES];
+            _places = [tempPlaces sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.navigationItem.rightBarButtonItem = NULL;
+                [self.tableView reloadData];
+            });
+        });
     }
     return _places;
 }
