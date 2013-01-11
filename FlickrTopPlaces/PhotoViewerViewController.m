@@ -7,11 +7,13 @@
 //
 
 #import "PhotoViewerViewController.h"
+#import "PhotoCacheFile.h"
 
 @interface PhotoViewerViewController () <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollViewer;
 @property (weak, nonatomic) IBOutlet UILabel *photoLabel;
+-(void)displayImage:(UIImage *)image;
 @end
 
 @implementation PhotoViewerViewController
@@ -31,41 +33,40 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    NSFileManager *fm = [[NSFileManager alloc] init];
-    NSArray *directories = [fm URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask];
-    NSString *path = [[directories lastObject] path];
-    NSString *largePhotoCachePath = [path stringByAppendingPathComponent: @"largePhotos"];
-    [fm createDirectoryAtPath:largePhotoCachePath withIntermediateDirectories:TRUE attributes:nil error: nil];
+    PhotoCacheFile *photoCache = [[PhotoCacheFile alloc] init];
 
-    NSString *photoFilePath = [largePhotoCachePath stringByAppendingPathComponent: [self.imageUrl lastPathComponent]];
-
-    if ([fm isReadableFileAtPath:photoFilePath]) {
+    NSString *filename = [self.imageUrl lastPathComponent];
+    if ([photoCache fileExists: filename]) {
         NSLog(@"RETRIEVE FROM CACHE");
-        NSData *imageData = [[NSData alloc] initWithContentsOfFile:photoFilePath];
-        self.imageView.image = [UIImage imageWithData:imageData];
-        self.scrollViewer.zoomScale = 1;
-        self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height);
-        self.scrollViewer.contentSize = self.imageView.frame.size;
+        NSData *imageData = [photoCache retrieveCachedFileByFilename:filename];
+        UIImage *image = [UIImage imageWithData:imageData];
+        [self displayImage:image];
     } else {
+        NSLog(@"RETRIEVE FROM URL");
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [spinner startAnimating];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
         
-        NSLog(@"RETRIEVE OUT OF URL");
         dispatch_queue_t downloadQueue = dispatch_queue_create("flickr photo download", NULL);
         dispatch_async(downloadQueue, ^{
-            NSData *data = [NSData dataWithContentsOfURL:self.imageUrl];
-            [data writeToFile:photoFilePath atomically: YES];
-            UIImage *img = [UIImage imageWithData: data];
+            NSData *imageData = [NSData dataWithContentsOfURL:self.imageUrl];
+            UIImage *image = [UIImage imageWithData: imageData];
+            [photoCache storeFileInCacheUsingData: imageData withFilename:filename];
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.navigationItem.rightBarButtonItem = NULL;
-                self.imageView.image = img;
-                self.scrollViewer.zoomScale = 1;
-                self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height);
-                self.scrollViewer.contentSize = self.imageView.frame.size;            
+                [self displayImage: image];
             });
         });
     }
+}
+
+- (void)displayImage:(UIImage *) image
+{
+    self.navigationItem.rightBarButtonItem = NULL;
+    self.imageView.image = image;
+    self.scrollViewer.zoomScale = 1;
+    self.imageView.frame = CGRectMake(0, 0, self.imageView.image.size.width, self.imageView.image.size.height);
+    self.scrollViewer.contentSize = self.imageView.frame.size;
 }
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
