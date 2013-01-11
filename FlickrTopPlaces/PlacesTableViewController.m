@@ -9,7 +9,6 @@
 #import "PlacesTableViewController.h"
 #import "RecentPhotosTableViewController.h"
 #import "FlickrFetcher.h"
-#import "PhotoCacheFile.h"
 
 @interface PlacesTableViewController ()
 @property(nonatomic, strong) NSArray *places;
