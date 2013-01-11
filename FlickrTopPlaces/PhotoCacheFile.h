@@ -15,4 +15,5 @@
 - (NSData *)retrieveCachedFileByFilename:(NSString *)filename;
 - (void)storeFileInCacheUsingData:(NSData *)fileData
                withFilename:(NSString *)filename;
+- (BOOL)isCacheFull;
 @end

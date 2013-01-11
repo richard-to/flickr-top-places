@@ -8,12 +8,14 @@
 
 #import "PhotoCacheFile.h"
 
-static const int CACHE_SIZE_DEFAULT = 1024 * 3072;
+static const int CACHE_SIZE_DEFAULT = 1350350; //1024 * 3072;
 
 @interface PhotoCacheFile ()
 @property (nonatomic, strong) NSString *userCacheDirectory;
 @property (nonatomic, strong) NSString *photoCacheDirectory;
 @property (nonatomic, strong) NSFileManager *fileManager;
+- (NSString *)findOldestFile;
+- (void)removeFile:(NSString *)filePath;
 @end
 
 @implementation PhotoCacheFile
@@ -75,6 +77,52 @@ static const int CACHE_SIZE_DEFAULT = 1024 * 3072;
 {
     NSString *path = [self.photoCacheDirectory stringByAppendingPathComponent:filename];
     [fileData writeToFile:path atomically:YES];
+    while ([self isCacheFull]) {
+        NSLog(@"Remove oldest file");
+        NSString *oldestFile = [self findOldestFile];
+        [self removeFile: oldestFile];
+    }
 }
 
+- (BOOL)isCacheFull
+{
+    NSDictionary *fileAttributes;
+    unsigned long long totalFileSize = 0;
+    NSArray *files = [self.fileManager contentsOfDirectoryAtPath: self.photoCacheDirectory error:nil];
+    NSString *filePath;
+    for (NSString *filename in files) {
+        filePath = [self.photoCacheDirectory stringByAppendingPathComponent:filename];
+        if ([self.fileManager fileExistsAtPath: filePath]) {
+            fileAttributes = [self.fileManager attributesOfItemAtPath:filePath error:nil];
+            totalFileSize += [fileAttributes fileSize];
+        }
+    }
+    return (totalFileSize > self.cacheSize) ? YES : NO;
+}
+
+- (NSString *)findOldestFile
+{
+    NSDictionary *fileAttributes;
+    NSArray *files = [self.fileManager contentsOfDirectoryAtPath:self.photoCacheDirectory error:nil];
+    NSString *filePath;
+    NSString *oldestFilePath;
+    NSDate *fileCreateDate;
+    for (NSString *filename in files) {
+        filePath = [self.photoCacheDirectory stringByAppendingPathComponent:filename];
+        if ([self.fileManager fileExistsAtPath: filePath]) {
+            fileAttributes = [self.fileManager attributesOfItemAtPath:filePath error:nil];
+            if (!fileCreateDate ||
+                    [fileAttributes.fileModificationDate compare: fileCreateDate] == NSOrderedAscending) {
+                fileCreateDate = fileAttributes.fileModificationDate;
+                oldestFilePath = filePath;
+            }
+        }
+    }
+    return oldestFilePath;
+}
+
+- (void)removeFile:(NSString *)filePath
+{
+    [self.fileManager removeItemAtPath:filePath error:nil];
+}
 @end
