@@ -25,6 +25,7 @@
 
 -(void)viewDidLoad
 {
+    self.navigationItem.hidesBackButton = YES;
     self.tabBarController.delegate = self;
 }
 
