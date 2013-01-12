@@ -122,6 +122,33 @@
             </objects>
             <point key="canvasLocation" x="-23" y="-903"/>
         </scene>
+        <!--Places Map View Controller - Top Places-->
+        <scene sceneID="hsn-Lx-45k">
+            <objects>
+                <viewController title="Top Places" id="QNx-uZ-AZD" customClass="PlacesMapViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gqU-yZ-p7V">
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="p7Y-BR-SqE"/>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="p7Y-BR-SqE" firstAttribute="top" secondItem="gqU-yZ-p7V" secondAttribute="top" type="default" id="3AW-A2-cHv"/>
+                            <constraint firstItem="p7Y-BR-SqE" firstAttribute="bottom" secondItem="gqU-yZ-p7V" secondAttribute="bottom" type="default" id="a9j-H0-trM"/>
+                            <constraint firstItem="p7Y-BR-SqE" firstAttribute="trailing" secondItem="gqU-yZ-p7V" secondAttribute="trailing" type="default" id="mto-d5-s4D"/>
+                            <constraint firstItem="p7Y-BR-SqE" firstAttribute="leading" secondItem="gqU-yZ-p7V" secondAttribute="leading" type="default" id="wfe-ET-Pmt"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="dvv-xg-2AH"/>
+                    <connections>
+                        <outlet property="mapView" destination="p7Y-BR-SqE" id="oGR-xd-V3V"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZuJ-Pc-BSt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="494" y="-1770"/>
+        </scene>
         <!--Places Table View Controller - Places-->
         <scene sceneID="a4b-AS-lB2">
             <objects>
@@ -162,7 +189,16 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="Places" id="M6N-aR-mqZ"/>
-                    <navigationItem key="navigationItem" title="Top Places" id="Uuk-Jq-3sj"/>
+                    <navigationItem key="navigationItem" title="Top Places" id="Uuk-Jq-3sj">
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="Vnv-T6-k3U">
+                            <connections>
+                                <segue destination="QNx-uZ-AZD" kind="push" identifier="places map segue" id="d9M-TD-wmg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapViewButton" destination="Vnv-T6-k3U" id="CWu-xj-0Sy"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X2q-3H-Che" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
