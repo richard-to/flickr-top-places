@@ -9,14 +9,19 @@
 #import "PlacesTableViewController.h"
 #import "RecentPhotosTableViewController.h"
 #import "FlickrFetcher.h"
+#import "PlacesMapViewController.h"
+#import "FlickrPlacesAnnotation.h"
 
-@interface PlacesTableViewController ()
+@interface PlacesTableViewController () <MapViewControllerDelegate>
 @property(nonatomic, strong) NSArray *places;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *mapViewButton;
+- (NSArray *)mapAnnotations;
 @end
 
 @implementation PlacesTableViewController
 
 @synthesize places = _places;
+@synthesize mapViewButton = _mapViewButton;
 
 -(void)viewDidLoad
 {
@@ -40,12 +45,29 @@
             NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:FLICKR_PLACE_NAME ascending:YES];
             _places = [tempPlaces sortedArrayUsingDescriptors:[NSArray arrayWithObject:sort]];
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.navigationItem.rightBarButtonItem = NULL;
+                self.navigationItem.rightBarButtonItem = self.mapViewButton;
                 [self.tableView reloadData];
             });
         });
     }
     return _places;
+}
+
+- (NSArray *) mapAnnotations
+{
+    NSMutableArray *annotations = [NSMutableArray arrayWithCapacity:self.places.count];
+    for (NSDictionary* place in self.places) {
+        [annotations addObject:[FlickrPlacesAnnotation annotationForPlace:place]];
+    }
+    return annotations;
+}
+
+- (UIImage *)mapViewController:(PlacesMapViewController *)sender imageForAnnotation:(id <MKAnnotation>)annotation
+{
+    FlickrPlacesAnnotation *fpa = (FlickrPlacesAnnotation *)annotation;
+    NSURL *url = [FlickrFetcher urlForPhoto:fpa.place format:FlickrPhotoFormatSquare];
+    NSData *data = [NSData dataWithContentsOfURL:url];
+    return data ? [UIImage imageWithData:data] : nil;
 }
 
 #pragma mark - Table view data source
@@ -132,6 +154,9 @@
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
     if ([segue.identifier isEqualToString:@"View Recent Photos"]) {
         [segue.destinationViewController setPlace: [self.places objectAtIndex:indexPath.row]];
+    } else if ([segue.identifier isEqualToString:@"places map segue"]) {
+        [segue.destinationViewController setDelegate: self];
+        [segue.destinationViewController setAnnotations: self.mapAnnotations];
     }
 }
 
