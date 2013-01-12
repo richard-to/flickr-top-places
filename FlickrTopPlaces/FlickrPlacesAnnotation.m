@@ -11,26 +11,24 @@
 
 @implementation FlickrPlacesAnnotation
 
-@synthesize place;
-
-+ (FlickrPlacesAnnotation *)annotationForPlace:(NSDictionary *)place;
++ (FlickrAnnotation *)annotationFromMeta:(NSDictionary *)flickrMeta;
 {
     FlickrPlacesAnnotation *annotation =
         [[FlickrPlacesAnnotation alloc] init];
-    annotation.place = place;
+    annotation.flickrMeta = flickrMeta;
     return annotation;
 }
 
 - (NSString *)title
 {
-    NSArray *placeChunks = [[self.place objectForKey:FLICKR_PLACE_NAME]
+    NSArray *placeChunks = [[self.flickrMeta objectForKey:FLICKR_PLACE_NAME]
                             componentsSeparatedByString:@", "];
     return placeChunks[0];
 }
 
 - (NSString *)subtitle
 {
-    NSArray *placeChunks = [[self.place objectForKey:FLICKR_PLACE_NAME]
+    NSArray *placeChunks = [[self.flickrMeta objectForKey:FLICKR_PLACE_NAME]
                             componentsSeparatedByString:@", "];
     if (placeChunks.count == 3) {
         return [[NSString alloc] initWithFormat:
@@ -38,13 +36,5 @@
     } else {
        return placeChunks[1];
     }
-}
-
-- (CLLocationCoordinate2D)coordinate
-{
-    CLLocationCoordinate2D coordinate;
-    coordinate.latitude = [[self.place objectForKey:FLICKR_LATITUDE] doubleValue];
-    coordinate.longitude = [[self.place objectForKey:FLICKR_LONGITUDE] doubleValue];
-    return coordinate;
 }
 @end

@@ -7,9 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MapKit/MapKit.h>
+#import "FlickrAnnotation.h"
 
-@interface FlickrPlacesAnnotation : NSObject <MKAnnotation>
-+ (FlickrPlacesAnnotation *)annotationForPlace:(NSDictionary *)place;
-@property (nonatomic, strong) NSDictionary *place;
+@interface FlickrPlacesAnnotation : FlickrAnnotation
 @end
