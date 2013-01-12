@@ -183,6 +183,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="mapView" destination="2JW-8U-Nze" id="AaL-ZM-Avr"/>
                         <segue destination="LDU-tm-SmU" kind="push" identifier="photo map to photo detail view" id="f7Y-hB-GiF"/>
                     </connections>
                 </viewController>
@@ -243,7 +244,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X2q-3H-Che" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="563" y="-991"/>
+            <point key="canvasLocation" x="507" y="-937"/>
         </scene>
         <!--Recent Photos Table View Controller - Recent-->
         <scene sceneID="rdt-pG-4He">
@@ -414,6 +415,13 @@
         </scene>
     </scenes>
     <classes>
+        <class className="MapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="listButton" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+            </relationships>
+        </class>
         <class className="NSLayoutConstraint" superclassName="NSObject">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
         </class>
@@ -425,15 +433,11 @@
                 <relationship kind="outlet" name="scrollViewer" candidateClass="UIScrollView"/>
             </relationships>
         </class>
-        <class className="PhotosMapViewController" superclassName="UIViewController">
+        <class className="PhotosMapViewController" superclassName="MapViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PhotosMapViewController.h"/>
         </class>
-        <class className="PlacesMapViewController" superclassName="UIViewController">
+        <class className="PlacesMapViewController" superclassName="MapViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlacesMapViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="listButton" candidateClass="UIBarButtonItem"/>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
         </class>
         <class className="PlacesTableViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PlacesTableViewController.h"/>
