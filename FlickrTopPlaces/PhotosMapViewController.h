@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MapViewController.h"
 
-@interface PhotosMapViewController : UIViewController
-
+@interface PhotosMapViewController : MapViewController
+@property (nonatomic, strong) NSDictionary *flickrMeta;
 @end

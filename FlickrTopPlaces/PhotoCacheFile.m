@@ -78,7 +78,6 @@ static const int CACHE_SIZE_DEFAULT = 1350350; //1024 * 3072;
     NSString *path = [self.photoCacheDirectory stringByAppendingPathComponent:filename];
     [fileData writeToFile:path atomically:YES];
     while ([self isCacheFull]) {
-        NSLog(@"Remove oldest file");
         NSString *oldestFile = [self findOldestFile];
         [self removeFile: oldestFile];
     }

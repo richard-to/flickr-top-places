@@ -37,12 +37,10 @@
 
     NSString *filename = [self.imageUrl lastPathComponent];
     if ([photoCache fileExists: filename]) {
-        NSLog(@"RETRIEVE FROM CACHE");
         NSData *imageData = [photoCache retrieveCachedFileByFilename:filename];
         UIImage *image = [UIImage imageWithData:imageData];
         [self displayImage:image];
     } else {
-        NSLog(@"RETRIEVE FROM URL");
         UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [spinner startAnimating];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:spinner];
