@@ -31,7 +31,6 @@
 {
     [super viewDidLoad];
     self.scrollViewer.delegate = self;
-    self.photoLabel.text = self.photoTitle;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -42,7 +41,7 @@
 - (void)updateImage
 {
     PhotoCacheFile *photoCache = [[PhotoCacheFile alloc] init];
-    
+    self.photoLabel.text = self.photoTitle;    
     NSString *filename = [self.imageUrl lastPathComponent];
     if ([photoCache fileExists: filename]) {
         NSData *imageData = [photoCache retrieveCachedFileByFilename:filename];
