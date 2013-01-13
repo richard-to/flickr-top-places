@@ -24,6 +24,7 @@
     [super viewDidLoad];
     self.showThumbnail = YES;
     self.navigationItem.hidesBackButton = NO;
+    self.delegate = self;
 }
 
 - (void)setFlickrMeta:(NSDictionary *)flickrMeta
