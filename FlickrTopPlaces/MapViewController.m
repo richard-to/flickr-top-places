@@ -69,7 +69,6 @@
         span.latitudeDelta = latDelta;
         span.longitudeDelta = lngDelta;
         MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
-        MKCoordinateRegion scaledRegion = [self.mapView regionThatFits:region];
         [self.mapView setRegion:region animated:NO];
         [self.mapView addAnnotations:self.annotations];
     }
