@@ -127,7 +127,7 @@
             <objects>
                 <viewController title="Top Places" id="QNx-uZ-AZD" customClass="PlacesMapViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gqU-yZ-p7V">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="p7Y-BR-SqE"/>
@@ -148,7 +148,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="listButton" destination="Ywq-7i-0gj" id="PM6-v4-hDt"/>
+                        <outlet property="listButton" destination="Ywq-7i-0gj" id="Egh-vO-WWv"/>
                         <outlet property="mapView" destination="p7Y-BR-SqE" id="oGR-xd-V3V"/>
                         <segue destination="iXe-JM-US3" kind="push" identifier="photos map view" id="eUU-by-B5f"/>
                     </connections>
@@ -162,7 +162,7 @@
             <objects>
                 <viewController id="iXe-JM-US3" customClass="PhotosMapViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AAb-0X-FQn">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2JW-8U-Nze"/>
@@ -183,6 +183,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="listButton" destination="7VI-Ng-hzF" id="ani-Lx-msj"/>
                         <outlet property="mapView" destination="2JW-8U-Nze" id="AaL-ZM-Avr"/>
                         <segue destination="LDU-tm-SmU" kind="push" identifier="photo map to photo detail view" id="f7Y-hB-GiF"/>
                     </connections>
@@ -196,7 +197,7 @@
             <objects>
                 <tableViewController title="Places" id="srp-ql-pGY" customClass="PlacesTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Laq-7c-9nb">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
@@ -461,6 +462,6 @@
         <segue reference="d8t-RK-1H8"/>
         <segue reference="GiD-RQ-fEj"/>
         <segue reference="IGI-gw-dfG"/>
-        <segue reference="f7Y-hB-GiF"/>
+        <segue reference="Fn7-Oh-43z"/>
     </inferredMetricsTieBreakers>
 </document>

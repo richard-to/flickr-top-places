@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Richard To. All rights reserved.
 //
 
+#import "PhotosMapViewController.h"
 #import "RecentPhotosTableViewController.h"
 #import "PhotoViewerViewController.h"
 #import "FlickrFetcher.h"
@@ -134,9 +135,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
+    NSDictionary *photoMeta = [self.photosList objectAtIndex:indexPath.row];
+ 
     if ([segue.identifier isEqualToString:@"Photo Viewer"] ||
         [segue.identifier isEqualToString:@"Photo Viewer 2"]) {
-        NSDictionary *photoMeta = [self.photosList objectAtIndex:indexPath.row];
         NSURL *url = [FlickrFetcher urlForPhoto: photoMeta
                                          format:FlickrPhotoFormatLarge];
         [segue.destinationViewController setImageUrl: url];
@@ -151,6 +153,8 @@
         [viewedSet addObject:photoMeta];
         [[NSUserDefaults standardUserDefaults] setObject:[viewedSet copy]
                                                 forKey:@"viewedPhotos"];
+    } else if ([segue.identifier isEqualToString: @"recent photos to list"]) {
+        [segue.destinationViewController setFlickrMeta: photoMeta];
     }
 }
 

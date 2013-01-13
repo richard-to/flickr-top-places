@@ -8,6 +8,7 @@
 
 #import "PhotosMapViewController.h"
 #import "PhotoViewerViewController.h"
+#import "RecentPhotosTableViewController.h"
 #import "FlickrFetcher.h"
 #import "FlickrAnnotation.h"
 
@@ -22,7 +23,8 @@
 - (void) viewDidLoad
 {
     [super viewDidLoad];
-    self.delegate = self;
+    self.showThumbnail = YES;
+    self.navigationItem.hidesBackButton = NO;
 }
 
 - (void)setFlickrMeta:(NSDictionary *)flickrMeta
@@ -37,7 +39,7 @@
         dispatch_async(downloadQueue, ^{
             NSArray *photosInPlace = [FlickrFetcher photosInPlace:flickrMeta maxResults:50];
             dispatch_async(dispatch_get_main_queue(), ^{
-                self.navigationItem.rightBarButtonItem = NULL;
+                self.navigationItem.rightBarButtonItem = self.listButton;
                 self.annotations = [self mapAnnotationWithData:photosInPlace];
             });
         });
@@ -84,6 +86,8 @@
         [viewedSet addObject:sender];
         [[NSUserDefaults standardUserDefaults] setObject:[viewedSet copy]
                                                   forKey:@"viewedPhotos"];
+    } else if ([segue.identifier isEqualToString:@"photo map to list view"]) {
+        [segue.destinationViewController setPlace: self.flickrMeta];
     }
 }
 

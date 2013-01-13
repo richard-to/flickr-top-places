@@ -10,7 +10,6 @@
 
 @interface MapViewController () <MKMapViewDelegate>
 @property (strong, nonatomic) IBOutlet MKMapView *mapView;
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *listButton;
 @end
 
 @implementation MapViewController
@@ -19,6 +18,7 @@
 @synthesize annotations = _annotations;
 @synthesize delegate = _delegate;
 @synthesize showThumbnail = _showThumbnail;
+@synthesize listButton = _listButton;
 
 - (void)viewDidLoad
 {

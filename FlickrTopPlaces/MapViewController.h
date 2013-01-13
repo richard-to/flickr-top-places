@@ -17,6 +17,7 @@
 
 
 @interface MapViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *listButton;
 @property (nonatomic, strong) NSArray *annotations;
 @property (nonatomic, weak) id <MapViewControllerDelegate> delegate;
 @property BOOL showThumbnail;
