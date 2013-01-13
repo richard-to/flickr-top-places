@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SplitViewBarButtonItemPresenter.h"
 
-@interface PhotoViewerViewController : UIViewController
+@interface PhotoViewerViewController : UIViewController <SplitViewBarButtonItemPresenter>
 @property(nonatomic, strong) NSURL *imageUrl;
 @property(nonatomic, strong) NSString *photoTitle;
+-(void)updateImage;
 @end

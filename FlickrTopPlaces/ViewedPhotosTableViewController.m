@@ -112,15 +112,27 @@
 
 #pragma mark - Table view delegate
 
+- (id <SplitViewBarButtonItemPresenter>)splitViewBarButtonItemPresenter
+{
+    id detailVC = [self.splitViewController.viewControllers lastObject];
+    if (![detailVC conformsToProtocol:@protocol(SplitViewBarButtonItemPresenter)]) {
+        detailVC = nil;
+    }
+    return detailVC;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    id detailVC = [self splitViewBarButtonItemPresenter];
+    if (detailVC) {
+        NSDictionary *photoMeta = [self.photoList objectAtIndex:indexPath.row];
+        
+        NSURL *url = [FlickrFetcher urlForPhoto: photoMeta
+                                         format:FlickrPhotoFormatLarge];
+        [detailVC setImageUrl: url];
+        [detailVC setPhotoTitle:photoMeta[FLICKR_PHOTO_TITLE]];
+        [detailVC updateImage];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

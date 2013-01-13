@@ -20,7 +20,6 @@
 @synthesize place = _place;
 @synthesize photosList = _photosList;
 
-
 - (void)setPhotosList:(NSArray *)photosList
 {
     _photosList = photosList;
@@ -121,15 +120,37 @@
 
 #pragma mark - Table view delegate
 
+- (id <SplitViewBarButtonItemPresenter>)splitViewBarButtonItemPresenter
+{
+    id detailVC = [self.splitViewController.viewControllers lastObject];
+    if (![detailVC conformsToProtocol:@protocol(SplitViewBarButtonItemPresenter)]) {
+        detailVC = nil;
+    }
+    return detailVC;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    id detailVC = [self splitViewBarButtonItemPresenter];
+    if (detailVC) {
+        NSDictionary *photoMeta = [self.photosList objectAtIndex:indexPath.row];
+
+        NSURL *url = [FlickrFetcher urlForPhoto: photoMeta
+                                         format:FlickrPhotoFormatLarge];
+        [detailVC setImageUrl: url];
+        [detailVC setPhotoTitle:photoMeta[FLICKR_PHOTO_TITLE]];
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSMutableArray *viewedSet = [[NSMutableArray alloc] initWithArray:[defaults objectForKey:@"viewedPhotos"] copyItems:YES];
+        
+        if (!viewedSet) {
+            viewedSet = [[NSMutableArray alloc] init];
+        }
+        [viewedSet addObject:photoMeta];
+        [[NSUserDefaults standardUserDefaults] setObject:[viewedSet copy]
+                                                  forKey:@"viewedPhotos"];
+        [detailVC updateImage];
+    }
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

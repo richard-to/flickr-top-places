@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollViewer;
 @property (weak, nonatomic) IBOutlet UILabel *photoLabel;
 -(void)displayImage:(UIImage *)image;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 @end
 
 @implementation PhotoViewerViewController
@@ -23,6 +24,8 @@
 @synthesize imageView = _imageView;
 @synthesize photoTitle = _photoTitle;
 @synthesize photoLabel = _photoLabel;
+@synthesize toolBar = _toolBar;
+@synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
 
 - (void)viewDidLoad
 {
@@ -33,8 +36,13 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    PhotoCacheFile *photoCache = [[PhotoCacheFile alloc] init];
+    [self updateImage];
+}
 
+- (void)updateImage
+{
+    PhotoCacheFile *photoCache = [[PhotoCacheFile alloc] init];
+    
     NSString *filename = [self.imageUrl lastPathComponent];
     if ([photoCache fileExists: filename]) {
         NSData *imageData = [photoCache retrieveCachedFileByFilename:filename];
@@ -55,6 +63,22 @@
                 [self displayImage: image];
             });
         });
+    }
+}
+
+- (void)handSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
+{
+    NSMutableArray *toolBarItems = [self.toolBar.items mutableCopy];
+    if (_splitViewBarButtonItem) [toolBarItems removeObject:_splitViewBarButtonItem];
+    if (splitViewBarButtonItem) [toolBarItems insertObject:splitViewBarButtonItem atIndex:0];
+    self.toolBar.items = toolBarItems;
+    _splitViewBarButtonItem = splitViewBarButtonItem;
+}
+
+- (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
+{
+    if (splitViewBarButtonItem != _splitViewBarButtonItem) {
+        [self handSplitViewBarButtonItem: splitViewBarButtonItem];
     }
 }
 

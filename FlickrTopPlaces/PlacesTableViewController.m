@@ -11,6 +11,7 @@
 #import "FlickrFetcher.h"
 #import "PlacesMapViewController.h"
 #import "FlickrPlacesAnnotation.h"
+#import "SplitViewBarButtonItemPresenter.h"
 
 @interface PlacesTableViewController ()
 @property(nonatomic, strong) NSArray *places;
@@ -23,6 +24,37 @@
 @synthesize places = _places;
 @synthesize mapViewButton = _mapViewButton;
 
+-(void)awakeFromNib
+{
+    [super awakeFromNib];
+    self.splitViewController.delegate = self;
+}
+
+- (id <SplitViewBarButtonItemPresenter>)splitViewBarButtonPresenter
+{
+    id detailVC = [self.splitViewController.viewControllers lastObject];
+    if (![detailVC conformsToProtocol:@protocol(SplitViewBarButtonItemPresenter)]) {
+        detailVC = nil;
+    }
+    return detailVC;
+}
+
+- (BOOL)splitViewController:(UISplitViewController *)svc shouldHideViewController:(UIViewController *)vc inOrientation:(UIInterfaceOrientation)orientation
+{
+    return [self splitViewBarButtonPresenter] ? UIInterfaceOrientationIsPortrait(orientation) : NO;
+}
+
+- (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc
+{
+    barButtonItem.title = @"Menu";
+    [self splitViewBarButtonPresenter].splitViewBarButtonItem = barButtonItem;
+}
+
+- (void)splitViewController:(UISplitViewController *)svc willShowViewController:(UIViewController *)aViewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    [self splitViewBarButtonPresenter].splitViewBarButtonItem = nil;
+}
+
 -(void)viewDidLoad
 {
     self.navigationItem.hidesBackButton = YES;
@@ -30,7 +62,9 @@
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UINavigationController *)viewController{
-    [viewController popToRootViewControllerAnimated:NO];
+    if([viewController isKindOfClass: [UINavigationController class]]) {
+        [viewController popToRootViewControllerAnimated:NO];
+    }
 }
 
 - (NSArray *)places
