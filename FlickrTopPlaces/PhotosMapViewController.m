@@ -13,7 +13,6 @@
 #import "FlickrAnnotation.h"
 
 @interface PhotosMapViewController () <MapViewControllerDelegate>
-
 @end
 
 @implementation PhotosMapViewController

@@ -21,4 +21,5 @@
 @property (nonatomic, strong) NSArray *annotations;
 @property (nonatomic, weak) id <MapViewControllerDelegate> delegate;
 @property BOOL showThumbnail;
+@property (strong, nonatomic) IBOutlet MKMapView *mapView;
 @end

@@ -9,7 +9,7 @@
 #import "MapViewController.h"
 
 @interface MapViewController () <MKMapViewDelegate>
-@property (strong, nonatomic) IBOutlet MKMapView *mapView;
+
 @end
 
 @implementation MapViewController
@@ -31,7 +31,48 @@
 - (void)updateMapView
 {
     if (self.mapView.annotations) [self.mapView removeAnnotations:self.mapView.annotations];
-    if (self.annotations) [self.mapView addAnnotations:self.annotations];
+    if (self.annotations) {
+        id <MKAnnotation> aView = self.annotations[0];
+        CLLocationCoordinate2D current = aView.coordinate;
+        CLLocationDegrees minLatitude  = current.latitude;
+        CLLocationDegrees maxLatitude = current.latitude;
+        CLLocationDegrees minLongitude = current.longitude;
+        CLLocationDegrees maxLongitude = current.longitude;
+        
+        for (id <MKAnnotation> aView in self.annotations) {
+            current = aView.coordinate;
+            if (current.latitude < minLatitude) {
+                minLatitude = current.latitude;
+            }
+            
+            if (current.latitude < maxLatitude) {
+                maxLatitude = current.latitude;
+            }
+            
+            if (current.longitude < minLongitude) {
+                minLongitude = current.longitude;
+            }
+            
+            if (current.longitude > maxLongitude) {
+                maxLongitude = current.longitude;
+            }
+        }
+        
+        CLLocationCoordinate2D center;
+        center.latitude = (minLatitude + maxLatitude) / 2;
+        center.longitude = (minLongitude + maxLongitude) / 2;
+        
+        CLLocationDegrees latDelta = fabs(maxLatitude - minLatitude) * 1.1;
+        CLLocationDegrees lngDelta = fabs(maxLongitude - minLongitude) * 1.1;
+        
+        MKCoordinateSpan span;
+        span.latitudeDelta = latDelta;
+        span.longitudeDelta = lngDelta;
+        MKCoordinateRegion region = MKCoordinateRegionMake(center, span);
+        MKCoordinateRegion scaledRegion = [self.mapView regionThatFits:region];
+        [self.mapView setRegion:region animated:NO];
+        [self.mapView addAnnotations:self.annotations];
+    }
 }
 
 - (void)setMapView:(MKMapView *)mapView
